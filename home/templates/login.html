@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;  
+    color: #333;                
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    color: #4a4a4a;             
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+form {
+    background-color: #ffffff;  
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 20px
+}
+
+button {
+    background-color: rgb(106, 233, 106) ; 
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px; 
+	font-weight: bold; 
+}
+
+button:hover {
+    background-color: rgb(51, 222, 51); 
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    display: block;
+    {% comment %} margin-top: 25px; {% endcomment %}
+    text-align: center;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Input Field Styles */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Responsiveness */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    form {
+        padding: 20px;
+    }
+}
+
+</style>
+<body>
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <a href="{% url 'signup' %}">Don't have an account? Sign up</a>
+</body>
+</html>

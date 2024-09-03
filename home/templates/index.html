@@ -1,0 +1,557 @@
+<!DOCTYPE html> 
+<html> 
+
+<head> 
+	<style> 
+		body { 
+			font-family: Arial, sans-serif; 
+		} 
+
+		.form-container { 
+			width: 60%; 
+			margin: 0 auto; 
+			padding: 20px; 
+			border: 1px solid #ccc; 
+			border-radius: 5px; 
+		} 
+
+		.form-group { 
+			margin-bottom: 15px; 
+		} 
+
+		.form-group label { 
+			display: block; 
+			font-weight: bold; 
+		} 
+
+		.form-group input[type="text"], 
+		.form-group textarea { 
+			width: 100%; 
+			padding: 10px; 
+			border: 1px solid #ccc; 
+			border-radius: 5px; 
+		} 
+
+		.form-group textarea { 
+			height: 100px; 
+		} 
+		.om { 
+			width: 100%; 
+			padding: 10px 20px; 
+			display: flex; 
+			gap: 10px; 
+		} 
+
+		.ed { 
+			width: 100%; 
+			padding: 10px 20px; 
+			display: flex; 
+			gap: 4%; 
+		} 
+
+		.com { 
+			width: 80%; 
+			padding: 5px 20px; 
+			display: flex; 
+			gap: 7%; 
+
+		} 
+
+		.op { 
+			margin: 10px; 
+
+		} 
+
+		.btn1 { 
+			cursor: pointer;
+			padding: 15px 15px; 
+			font-size: 15px; 
+			font-weight: bold; 
+			background-color: rgb(106, 233, 106); 
+			border-radius: 10px;  
+			display: block;
+			margin: 20px auto;
+		} 
+		.btn2 { 
+			position: absolute; 
+            top: 15px; 
+            right: 15px; 
+			cursor: pointer;
+			padding: 15px 15px; 
+			font-size: 15px; 
+			font-weight: bold; 
+			background-color: rgb(106, 233, 106); 
+			border-radius: 10px;  
+		} 
+		.skills-container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+		.skill-item {
+			lex: 1 1 18%;
+		}				
+		.skill-input {
+			font-size: 14px;
+		}		
+		.skill-buttons {
+			margin-top: 10px;
+			display: flex;
+			gap: 10px;
+		} 
+		.btn , #add-education-field , .remove-education-field , 
+		.remove-project-field , #add-project-field, .remove-experience-field,
+		#add-experience-field, .remove-achievement-field, #add-achievement-field,
+        .remove-language-field,#add-language-field { 
+			padding: 5px 10px;
+			font-size: 12px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			cursor: pointer;
+			background-color: #f0f0f0;
+			width: 100px; /* New */
+			text-align: center; /* New */
+		}
+		.btn:hover , .remove-education-field:hover , #add-education-field:hover ,
+		 .remove-project-field:hover , #add-project-field:hover , 
+		 #add-experience-field:hover , .remove-experience-field:hover,
+		 .remove-achievement-field:hover,#add-achievement-field:hover,
+        .remove-language-field:hover,#add-language-field:hover{
+			background-color: #e0e0e0;
+		}
+		.education-fields {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 10px;
+		}
+		.project-fields {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+			font-size: 15px;
+        }
+        .project-header{
+            display: flex;
+            gap: 80px;
+			font-size: 15px;
+			margin-top: 10px;
+			height: 60px;
+        }
+		.experience-header {
+            display: flex;
+            gap: 5rem;
+			height:65px;
+			font-size: 15px;
+        }
+        .project-description , .experience-description {
+            margin-bottom: 8px;
+        }
+		.experience-fields{
+			display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+			font-size: 15px;
+		}
+		.achievement-fields,
+        .language-fields {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+		
+	</style> 
+</head> 
+
+<body> 
+	<form action="{% url 'logout' %}" method="post">
+		{% csrf_token %}
+		<button type="submit" class="btn2">Logout</button>
+	</form>
+	<h1 style="text-align: center; color:green; font-size:40px; ">Resume Builder</h1> 
+
+	<form method="post"> 
+		{% csrf_token %} 
+
+		<div class="form-container"> 
+			<h2>Personal Information</h2> 
+			<div class="form-group"> 
+				<label for="name">Name:</label> 
+				<input type="text" id="name" name="name"> 
+			</div> 
+			<div class="form-group"> 
+				<label for="name">About:</label> 
+				<input type="text" id="name" name="about"> 
+            </div>
+			<div class="form-group"> 
+				<label for="age">Age:</label> 
+				<input type="text" id="age" name="age"> 
+			</div> 
+			<div class="form-group"> 
+				<label for="email">Email:</label> 
+				<input type="text" id="email" name="email"> 
+			</div> 
+			<div class="form-group"> 
+				<label for="phone">Phone:</label> 
+				<input type="text" id="phone" name="phone"> 
+			</div> 
+			<div class="form-group">
+                <label for="skills">Skills:</label>
+                <div id="skillsContainer" class="skills-container">
+                    <div class="skill-item">
+                        <input type="text" name="skill1" class="skill-input" placeholder="Skill 1" >
+                    </div>
+                    <div class="skill-item">
+                        <input type="text" name="skill2" class="skill-input" placeholder="Skill 2" >
+                    </div>
+                    <div class="skill-item">
+                        <input type="text" name="skill3" class="skill-input" placeholder="Skill 3" >
+                    </div>
+                    <div class="skill-item">
+                        <input type="text" name="skill4" class="skill-input" placeholder="Skill 4" >
+                    </div>
+                </div>
+                <div class="skill-buttons">
+                    <button type="button" id="addSkillBtn" class="btn">Add More</button>
+                    <button type="button" id="removeSkillBtn" class="btn">Remove</button>
+                </div>
+            </div>
+
+				<div class="form-group">
+					<label for="education">Education</label>
+					<div id="education-fields-container">
+						<div class="education-fields">
+							<input type="text" name="degree1" placeholder="Degree" >
+							<input type="text" name="college1" placeholder="College" >
+							<input type="text" name="year1" placeholder="Year" >
+							<button type="button" class="remove-education-field" disabled>Remove</button>
+						</div>
+					</div>
+					<button type="button" id="add-education-field">Add More</button>
+				</div>
+			
+				<div class="form-group">
+					<label for="languages">Languages:</label>
+					<div id="languages-container">
+						<div class="language-fields">
+							<div class="form-group">
+								<label for="language1">Language 1:</label>
+								<input type="text" id="language1" name="lang1">
+							</div>
+							<button type="button" class="remove-language-field" disabled>Remove</button>
+						</div>
+					</div>
+					<button type="button" id="add-language-field">Add More</button>
+				</div>
+				
+				<div class="form-group">
+					<label for="projects">Projects:</label>
+					<div id="projects-container">
+						<div class="project-fields">
+							<div class="project-header">
+								<div class="form-group">
+									<label for="project1-title">Project Title:</label>
+									<input type="text" id="project1-title" name="project1_title">
+								</div>
+								<div class="form-group">
+									<label for="project1-duration">Duration:</label>
+									<input type="text" id="project1-duration" name="project1_duration">
+								</div>
+							</div>
+							<div class="project-description">
+								<label for="project1-desc">Description:</label>
+								<input type="text" id="project1-desc" name="project1_desc">
+							</div>
+							<button type="button" class="remove-project-field" disabled>Remove</button>
+						</div>
+					</div>
+					<button type="button" id="add-project-field">Add More</button>
+				</div>
+
+				<div class="form-group">
+					<label for="experience">Work Experience:</label>
+					<div id="experience-fields-container">
+						<div class="experience-fields">
+							<div class="experience-header">
+								<div class="form-group">
+									<label for="experience1-company">Company Name:</label>
+									<input type="text" id="experience1-company" name="company1">
+								</div>
+								<div class="form-group">
+									<label for="experience1-post">Post:</label>
+									<input type="text" id="experience1-post" name="post1">
+								</div>
+								<div class="form-group">
+									<label for="experience1-duration">Duration:</label>
+									<input type="text" id="experience1-duration" name="duration1">
+								</div>
+							</div>
+							<div class="experience-description">
+								<label for="experience1-desc">Description:</label>
+								<input type="text" id="experience1-desc" name="description1" >
+							</div>
+							<button type="button" class="remove-experience-field" disabled>Remove</button>
+						</div>
+					</div>
+					<button type="button" id="add-experience-field">Add More</button>
+				</div>
+
+				<div class="form-group">
+					<label for="achievements">Achievements:</label>
+					<div id="achievements-container">
+						<div class="achievement-fields">
+							<div class="form-group">
+								<label for="ach1">Achievement 1:</label>
+								<input type="text" id="ach1" name="ach1">
+							</div>
+							<button type="button" class="remove-achievement-field" disabled>Remove</button>
+						</div>
+					</div>
+					<button type="button" id="add-achievement-field">Add More</button>
+				</div>
+				
+			</div> 
+			<button type="submit" class="btn1">Submit</button>
+
+	</form> 
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+            const skillsContainer = document.getElementById('skillsContainer');
+            const addSkillBtn = document.getElementById('addSkillBtn');
+            const removeSkillBtn = document.getElementById('removeSkillBtn');
+
+            let skillCount = 4; 
+            const updateSkillRemoveButtonState = () => {
+                removeSkillBtn.disabled = skillCount <= 4;
+            };
+            addSkillBtn.addEventListener('click', () => {
+                skillCount++;
+                const skillItem = document.createElement('div');
+                skillItem.classList.add('skill-item');
+
+                const skillInput = document.createElement('input');
+                skillInput.type = 'text';
+                skillInput.name = `skill${skillCount}`;
+                skillInput.classList.add('skill-input');
+                skillInput.placeholder = `Skill ${skillCount}`;
+
+                skillItem.appendChild(skillInput);
+                skillsContainer.appendChild(skillItem);
+
+                updateSkillRemoveButtonState();
+            });
+            removeSkillBtn.addEventListener('click', () => {
+                if (skillCount > 4) {
+                    skillsContainer.removeChild(skillsContainer.lastElementChild);
+                    skillCount--;
+                    updateSkillRemoveButtonState();
+                }
+        });
+		updateSkillRemoveButtonState();
+		let educationCount = 1;
+
+
+		const addEducationBtn = document.getElementById('add-education-field');
+		const educationContainer = document.getElementById('education-fields-container');
+
+		const updateEducationButtonStates = () => {
+			document.querySelectorAll('.remove-education-field').forEach(button => {
+				button.disabled = educationCount <= 1;
+			});
+
+			addEducationBtn.disabled = educationCount >= 5;
+		};
+
+		addEducationBtn.addEventListener('click', () => {
+			if (educationCount < 5) {
+				educationCount++;
+				const newFieldSet = document.createElement('div');
+				newFieldSet.className = 'education-fields';
+				newFieldSet.innerHTML = `
+					<input type="text" name="degree${educationCount}" placeholder="Degree" required>
+					<input type="text" name="college${educationCount}" placeholder="College" required>
+					<input type="text" name="year${educationCount}" placeholder="Year" required>
+					<button type="button" class="remove-education-field">Remove</button>
+				`;
+				educationContainer.appendChild(newFieldSet);
+				updateEducationButtonStates();
+			}
+		});
+
+		educationContainer.addEventListener('click', (event) => {
+			if (event.target.classList.contains('remove-education-field')) {
+				if (educationCount > 1) {
+					event.target.parentElement.remove();
+					educationCount--;
+					updateEducationButtonStates();
+				}
+			}
+		});
+
+		updateEducationButtonStates();
+		const addProjectBtn = document.getElementById('add-project-field');
+            const projectsContainer = document.getElementById('projects-container');
+
+            addProjectBtn.addEventListener('click', function () {
+                const existingProjects = projectsContainer.querySelectorAll('.project-fields').length;
+                if (existingProjects < 5) {
+                    const newProject = document.createElement('div');
+                    newProject.className = 'project-fields';
+                    newProject.innerHTML = `
+                        <div class="project-header">
+                            <div class="form-group">
+                                <label for="project${existingProjects + 2}-title">Project Title:</label>
+                                <input type="text" id="project${existingProjects + 2}-title" name="project${existingProjects + 2}_title">
+                            </div>
+                            <div class="form-group">
+                                <label for="project${existingProjects + 2}-duration">Duration:</label>
+                                <input type="text" id="project${existingProjects + 2}-duration" name="project${existingProjects + 2}_duration">
+                            </div>
+                        </div>
+                        <div class="project-description">
+                            <label for="project${existingProjects + 2}-desc">Description:</label>
+                            <input type="text" id="project${existingProjects + 2}-desc" name="project${existingProjects + 2}_desc">
+                        </div>
+                        <button type="button" class="remove-project-field">Remove</button>
+                    `;
+                    projectsContainer.appendChild(newProject);
+                    updateRemoveProjectButtons();
+                }
+            });
+
+            projectsContainer.addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-project-field')) {
+                    e.target.closest('.project-fields').remove();
+                    updateRemoveProjectButtons();
+                }
+            });
+
+            function updateRemoveProjectButtons() {
+                const projects = projectsContainer.querySelectorAll('.project-fields');
+                projects.forEach((project, index) => {
+                    const removeBtn = project.querySelector('.remove-project-field');
+                    removeBtn.disabled = projects.length === 1;
+                });
+            }
+			let experienceIndex = 2;
+				const maxExperience = 5;
+
+				const addExperienceBtn = document.getElementById('add-experience-field');
+				const experienceFieldsContainer = document.getElementById('experience-fields-container');
+
+				function updateButtons() {
+					addExperienceBtn.disabled = experienceIndex > maxExperience;
+					document.querySelectorAll('.remove-experience-field').forEach((btn, index) => {
+						btn.disabled = experienceIndex <= 2 && index === 0;
+					});
+				}
+
+				addExperienceBtn.addEventListener('click', function() {
+					if (experienceIndex <= maxExperience) {
+						const newExperienceField = document.createElement('div');
+						newExperienceField.className = 'experience-fields';
+						newExperienceField.innerHTML = `
+							<div class="experience-header">
+								<div class="form-group">
+									<label for="experience${experienceIndex}-company">Company Name:</label>
+									<input type="text" id="experience${experienceIndex}-company" name="company${experienceIndex}">
+								</div>
+								<div class="form-group">
+									<label for="experience${experienceIndex}-post">Post:</label>
+									<input type="text" id="experience${experienceIndex}-post" name="post${experienceIndex}">
+								</div>
+								<div class="form-group">
+									<label for="experience${experienceIndex}-duration">Duration:</label>
+									<input type="text" id="experience${experienceIndex}-duration" name="duration${experienceIndex}" >
+								</div>
+							</div>
+							<div class="experience-description">
+								<label for="experience${experienceIndex}-desc">Description:</label>
+								<input type="text" id="experience${experienceIndex}-desc" name="description${experienceIndex}" >
+							</div>
+							<button type="button" class="remove-experience-field">Remove</button>
+						`;
+						experienceFieldsContainer.appendChild(newExperienceField);
+						experienceIndex++;
+						updateButtons();
+					}
+				});
+
+				experienceFieldsContainer.addEventListener('click', function(event) {
+					if (event.target.classList.contains('remove-experience-field')) {
+						event.target.parentElement.remove();
+						experienceIndex--;
+						updateButtons();
+					}
+				});
+
+				updateButtons();
+				let achievementCount = 1;
+        const maxAchievements = 5;
+
+        document.getElementById('add-achievement-field').addEventListener('click', function () {
+            if (achievementCount < maxAchievements) {
+                achievementCount++;
+                const achievementsContainer = document.getElementById('achievements-container');
+                const newAchievementDiv = document.createElement('div');
+                newAchievementDiv.className = 'achievement-fields';
+                newAchievementDiv.innerHTML = `
+                    <div class="form-group">
+                        <label for="ach${achievementCount}">Achievement ${achievementCount}:</label>
+                        <input type="text" id="ach${achievementCount}" name="ach${achievementCount}">
+                    </div>
+                    <button type="button" class="remove-achievement-field">Remove</button>
+                `;
+                achievementsContainer.appendChild(newAchievementDiv);
+            	this.disabled = achievementCount >= maxAchievements;
+            	updateRemoveButtons('remove-achievement-field', achievementCount);
+            }
+        });
+
+        document.getElementById('achievements-container').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-achievement-field')) {
+				e.target.parentElement.remove();
+				achievementCount--;
+				document.getElementById('add-achievement-field').disabled = achievementCount >= maxAchievements;
+				updateRemoveButtons('remove-achievement-field', achievementCount);
+			}
+		});
+			let languageCount = 1;
+        const maxLanguages = 6;
+
+        document.getElementById('add-language-field').addEventListener('click', function () {
+            if (languageCount < maxLanguages) {
+                languageCount++;
+                const languagesContainer = document.getElementById('languages-container');
+                const newLanguageDiv = document.createElement('div');
+                newLanguageDiv.className = 'language-fields';
+                newLanguageDiv.innerHTML = `
+                    <div class="form-group">
+                        <label for="language${languageCount}">Language ${languageCount}:</label>
+                        <input type="text" id="language${languageCount}" name="lang${languageCount}">
+                    </div>
+                    <button type="button" class="remove-language-field">Remove</button>
+                `;
+                languagesContainer.appendChild(newLanguageDiv);
+            	this.disabled = languageCount >= maxLanguages;
+            	updateRemoveButtons('remove-language-field', languageCount);
+            }
+        });
+
+        document.getElementById('languages-container').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-language-field')) {
+				e.target.parentElement.remove();
+				languageCount--;
+				document.getElementById('add-language-field').disabled = languageCount >= maxLanguages;
+				updateRemoveButtons('remove-language-field', languageCount);
+			}
+        });
+		
+	});
+	
+		
+	</script>
+</body> 
+
+</html>

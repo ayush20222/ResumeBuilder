@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn1 {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            padding: 15px 15px;
+            font-size: 15px;
+            font-weight: bold;
+            background-color: rgb(106, 233, 106);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: green;
+            font-size: 40px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 60%;
+            margin: 20px auto;
+            font-size: 18px;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+        .btn2 { 
+			cursor: pointer;
+			padding: 15px 15px; 
+			font-size: 15px; 
+			font-weight: bold; 
+			background-color: rgb(106, 233, 106); 
+			border-radius: 10px;  
+			display: block;
+			margin: 20px auto;
+		} 
+    </style>
+</head>
+<body>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn1">Logout</button>
+    </form>
+    <h1>Suitable Job Profiles</h1>
+    <ul>
+        {% for job_title, matching_skills, job_skills in recommendations %}
+            <li>
+                <strong>{{ job_title }}</strong><br>
+                <strong>Matching Skills:</strong> {{ matching_skills|join:", " }}<br>
+                <strong>All Required Skills:</strong> {{ job_skills|join:", " }}
+            </li>
+        {% empty %}
+            <li>No job recommendations available.</li>
+        {% endfor %}
+    </ul>
+    <form action="{% url 'resumebuild' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn2">Back</button>
+    </form>
+</body>
+</html>
