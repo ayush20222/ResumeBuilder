@@ -25,7 +25,7 @@ SECRET_KEY = '(3e)ak#u2z3)fdd^q6$9-1!q0hlyh6cy=x6_y*i#x54ew%j17-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['resumebuilder-57zm.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
