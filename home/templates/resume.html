@@ -192,7 +192,7 @@
 	</div> 
 	<div class="button-container">
 		<button onclick="generatePDF('mn')" type="button" class="btn1">Download PDF</button> 
-		<button class="btn1" onclick="window.history.back();">Back</button>
+		<button class="btn1" onclick="window.location.href='/resumebuild/';">Back</button>
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script> 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.0/mammoth.browser.min.js"></script> 
@@ -211,9 +211,6 @@
 			html2pdf() 
 				.from(container) 
 				.set(pdfOptions).save();
-		} 
-		function goBack() {
-			window.location.href = "index.html";
 		}
 	</script> 
 
