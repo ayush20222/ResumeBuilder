@@ -74,14 +74,14 @@ def index_view(request):
 			desc = request.POST.get(f'project{i}_desc')
 			if title and duration and desc:	
 				projects.append({'title': title, 'duration': duration, 'description': desc})
-		experience = []
+		experiences = []
 		for i in range(1, 11):
 			company = request.POST.get(f'company{i}')
 			post = request.POST.get(f'post{i}')
 			duration = request.POST.get(f'duration{i}')
 			description = request.POST.get(f'description{i}')
 			if company and post and duration and description:
-				experience.append({'company': company, 'post': post, 'duration': duration, 'description': description})
+				experiences.append({'company': company, 'post': post, 'duration': duration, 'description': description})
 		achievements = []
 		for i in range(1, 6):
 			achievement = request.POST.get(f'ach{i}')
@@ -96,7 +96,7 @@ def index_view(request):
 
 		resume_content = f"Name: {name}\nAbout: {about}\nAge: {age}\nEmail: {email}\nPhone: {phone}\n" \
                          f"Skills: {', '.join(skills)}\nEducation: {education_data}\nProjects: {projects}\n" \
-                         f"Experience: {experience}\nAchievements: {achievements}\nLanguages: {languages}"
+                         f"Experience: {experiences}\nAchievements: {achievements}\nLanguages: {languages}"
         
 		if request.user.is_authenticated:
 			user_profile, created = UserProfile.objects.get_or_create(user=request.user)
@@ -108,6 +108,6 @@ def index_view(request):
 											'age':age, 'email':email, 
 											'phone':phone, 'skills':skills, 
 											'education_data': education_data,'languages':languages,
-											'projects':projects,'experience':experience,'achievements':achievements}) 
+											'projects':projects,'experiences':experiences,'achievements':achievements}) 
 	
 	return render(request, 'index.html') 
